@@ -179,30 +179,7 @@ lsmod | grep nouveau
 
 若无输出结果，说明nouveau已被正确禁用，可以继续执行后续操作。
 
-### 2.5	配置环境变量
-
-与Windows一样的是，我们在Linux中同样需要配置环境变量。在终端中输入如下命令打开配置文件：
-
-```
-sudo nano ~/.bashrc
-```
-
-值得注意的是，.bashrc是一个隐藏文件，我们在文件管理器中勾选“显示隐藏文件”后便可以在主目录中看见它。
-
-我们在末尾写入：
-
-```
-export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
-```
-
-随后更新环境变量：
-
-```
-source ~/.bashrc
-```
-
-### 2.6	卸载已有驱动
+### 2.5	卸载已有驱动
 
 在往下看前，请先在终端中运行如下命令：
 
@@ -210,7 +187,7 @@ source ~/.bashrc
 nvidia-smi
 ```
 
-**若提示未找到命令，那么请直接跳转至2.7进行后续操作，若出现下图所示的结果，请继续阅读。**
+**若提示未找到命令，那么请直接跳转至2.6进行后续操作，若出现下图所示的结果，请继续阅读。**
 
 <img src="/home/sakana/图片/nvidia-smi.png" style="zoom:50%;" />
 
@@ -223,7 +200,7 @@ sudo apt autoremove
 
 随后再运行nvidia-smi，确保提示未找到命令。
 
-### 2.7	退出图形化界面
+### 2.6	退出图形化界面
 
 Ubuntu22.04LTS的x-server为tty1-6，图形化界面为tty7，因此我们按住Ctrl+Alt+F1（1-6均可），进入x-server并运行如下命令关闭图形化界面：
 
@@ -241,13 +218,13 @@ sudo apt install lightdm
 
 随后再次运行第一条命令，关闭图形化界面。
 
-### 2.8	驱动安装
+### 2.7	驱动安装
 
 首先给驱动程序权限，并执行安装：
 
 ```
 sudo chmod +x 驱动名称.run*
-sudo sh 驱动名称.run* --no-opengl-files --no-x-check --no-nouveau-check
+sudo sh 驱动名称.run* --no-x-check --no-nouveau-check
 ```
 
 值得注意的是，在图形化界面关闭后我们就没有办法直观的看到文件的名称了，且由于x-server模式下我们没办法输入中文，所以之前需要大家将驱动转移到没有中文路径的地方并记住它的文件名。
@@ -265,7 +242,7 @@ sudo sh 驱动名称.run* --no-opengl-files --no-x-check --no-nouveau-check
 
 3.Nvidia’s 32-bit compatibility libraries?
 
-“No”
+“Yes”
 
 4.Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up. 
 
@@ -274,7 +251,7 @@ sudo sh 驱动名称.run* --no-opengl-files --no-x-check --no-nouveau-check
 
 上述为一些重要的勾选项，根据机器不同可能有不同的项目，**切记不要直接乱选！！！！**如果遇到上述勾选项以外的请上网搜索，一旦勾选错可能导致黑屏等问题，需要从头来过。
 
-### 2.9	验证
+### 2.8	验证
 
 安装完成后，我们会回到x-server界面，此时我们先挂载NVIDIA驱动：
 
@@ -295,9 +272,15 @@ PC重启后，我们在终端中运行如下命令：
 nvidia-smi
 ```
 
-若出现如下输出，说明安装成功。
+输出结果如下：
 
 <img src="/home/sakana/图片/nvidia-smi.png" style="zoom:50%;" />
+
+打开“设置”，点击“关于”，界面如下，注意“图形”项目应当为NVIDIA Corporation：
+
+<img src="/home/sakana/图片/setting.png" style="zoom:50%;" />
+
+若以上两项均符合，说明安装成功。
 
 至此显卡驱动安装完毕。
 
