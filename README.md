@@ -30,13 +30,13 @@
 
 打开终端，输入如下命令将文件读写状态改为可读可写：
 
-```
+```bash
 sudo chmod 666 /etc/environment
 ```
 
 随后我们对文件进行编辑：
 
-```
+```bash
 sudo nano /etc/environment
 ```
 
@@ -44,7 +44,7 @@ sudo nano /etc/environment
 
 我们在该文件中加入如下内容：
 
-```
+```bash
 http_proxy=http://127.0.0.1:7890/
 https_proxy=http://127.0.0.1:7890/
 ftp_proxy=http://127.0.0.1:7890/
@@ -55,7 +55,7 @@ FTP_PROXY=http://127.0.0.1:7890/
 
 随后依次按下Ctrl+O（写入），Enter（保存），Ctrl+X（退出），回到终端运行如下命令将文件读写状态改为只读并重启PC：
 
-```
+```bash
 sudo chmod 444 /etc/environment
 sudo reboot
 ```
@@ -72,7 +72,7 @@ PC重启后，我们可以尝试打开一些本来打不开的网站，若可以
 
 打开终端，输入以下命令查看显卡可用的驱动：
 
-```
+```bash
 ubuntu-drivers devices
 ```
 
@@ -96,7 +96,7 @@ driver   : xserver-xorg-video-nouveau - distro free builtin
 
 其中，可以看见第7行的：
 
-```
+```bash
 driver   : nvidia-driver-525-open - distro non-free recommended
 ```
 
@@ -124,14 +124,14 @@ driver   : nvidia-driver-525-open - distro non-free recommended
 
 在终端中运行如下命令：
 
-```
+```bash
 sudo apt-get update
 sudo apt-get upgrade
 ```
 
 等待软件包安装完成后，继续运行如下命令：
 
-```
+```bash
 sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler
 sudo apt-get install --no-install-recommends libboost-all-dev
 sudo apt-get install libopenblas-dev liblapack-dev libatlas-base-dev
@@ -140,7 +140,7 @@ sudo apt-get install libgflags-dev libgoogle-glog-dev liblmdb-dev
 
 如果安装失败，则先进行pip3的升级更新，运行如下命令：
 
-```
+```bash
 # 未安装pip3
 sudo apt-get install python3-pip
 # 安装的pip3版本较低
@@ -153,27 +153,27 @@ Ubuntu系统在安装完成后会使用自带的开源第三方显卡驱动nouve
 
 在终端中运行如下命令：
 
-```
+```bash
 sudo nano /etc/modprobe.d/blacklist.conf
 ```
 
 打开文件后，我们在文件的末尾写入：
 
-```
+```bash
 blacklist nouveau
 options nouveau modeset=0
 ```
 
 随后保存，回到终端运行如下命令进行更新并重启PC：
 
-```
+```bash
 sudo update-initramfs -u
 sudo reboot
 ```
 
 PC重启后，在终端中运行如下命令检验nouveau是否正确禁用：
 
-```
+```bash
 lsmod | grep nouveau
 ```
 
@@ -183,7 +183,7 @@ lsmod | grep nouveau
 
 在往下看前，请先在终端中运行如下命令：
 
-```
+```bash
 nvidia-smi
 ```
 
@@ -193,7 +193,7 @@ nvidia-smi
 
 我们在安装适合版本的驱动时，需要先卸载现有的驱动，在终端中运行如下命令：
 
-```
+```bash
 sudo apt-get --purge remove nvidia*
 sudo apt autoremove
 ```
@@ -204,13 +204,13 @@ sudo apt autoremove
 
 Ubuntu22.04LTS的x-server为tty1-6，图形化界面为tty7，因此我们按住Ctrl+Alt+F1（1-6均可），进入x-server并运行如下命令关闭图形化界面：
 
-```
+```bash
 sudo service lightdm stop
 ```
 
 若提示该服务未装载，则先安装Lightdm：
 
-```
+```bash
 sudo apt install lightdm
 ```
 
@@ -222,7 +222,7 @@ sudo apt install lightdm
 
 首先给驱动程序权限，并执行安装：
 
-```
+```bash
 sudo chmod +x 驱动名称.run*
 sudo sh 驱动名称.run* --no-x-check --no-nouveau-check
 ```
@@ -255,20 +255,20 @@ sudo sh 驱动名称.run* --no-x-check --no-nouveau-check
 
 安装完成后，我们会回到x-server界面，此时我们先挂载NVIDIA驱动：
 
-```
+```bash
 modprobe nvidia
 ```
 
 随后我们回到图形化界面并重启PC：
 
-```
+```bash
 sudo service lightdm start
 sudo reboot
 ```
 
 PC重启后，我们在终端中运行如下命令：
 
-```
+```bash
 nvidia-smi
 ```
 
@@ -316,7 +316,7 @@ nvidia-smi
 
 按住Ctrl+Alt+F1（1-6均可），进入x-server并运行如下命令关闭图形化界面：
 
-```
+```bash
 sudo service lightdm stop
 ```
 
@@ -324,13 +324,13 @@ sudo service lightdm stop
 
 我们在x-server界面中，给CUDA Toolkit赋予执行权限：
 
-```
+```bash
 chmod +x CUDA程序.run
 ```
 
 随后运行安装包：
 
-```
+```bash
 sudo ./CUDA程序.run
 ```
 
@@ -344,13 +344,13 @@ sudo ./CUDA程序.run
 
 回到图形化界面，在终端中运行如下命令：
 
-```
+```bash
 sudo nano ~/.bashrc
 ```
 
 我们在文件结尾加入如下命令：
 
-```
+```bash
 export CUDA_HOME=/usr/local/cuda-11.8
 export LD_LIBRARY_PATH=${CUDA_HOME}/lib64
 export PATH=${CUDA_HOME}/bin:${PATH}
@@ -358,7 +358,7 @@ export PATH=${CUDA_HOME}/bin:${PATH}
 
 随后更新环境变量并重启PC：
 
-```
+```bash
 source ~/.bashrc
 sudo reboot
 ```
@@ -367,7 +367,7 @@ sudo reboot
 
 我们在终端中运行如下命令：
 
-```
+```bash
 nvcc --version
 ```
 
@@ -383,7 +383,37 @@ CUDNN更多的是对CUDA的一个补充，所以CUDNN的安装相对简单，我
 
 <img src="/home/sakana/图片/cudnn.png" style="zoom:50%;" />
 
-这里我们选择针对Ubuntu22.04的64位机版本，下载.deb文件。.deb文件的好处在于可以直接通过Ubuntu自带的安装器安装，右键选择其他程序打开后进行安装即可。
+这里我们选择针对Ubuntu22.04的64位机版本，下载.tar文件。
+
+在下载的同时，我们修改目标文件夹的权限，在终端中运行如下命令：
+
+```bash
+cd /usr/local/cuda
+sudo chmod 666 include # 提供所有用户读写权限
+sudo chmod 666 lib64
+```
+
+下载完成后解压，文件夹内容如图所示，我们将include文件夹内所有内容复制粘贴到/usr/local/cuda/include/中，将lib文件夹中所有内容复制到/usr/local/cuda/lib64/中。
+
+<img src="/home/sakana/图片/2023-04-17_15-48.png" style="zoom:50%;" />
+
+随后，在终端中运行如下命令恢复读写权限：
+
+```bash
+sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+```
+
+最后，验证安装是否成功，在终端运行如下命令：
+
+```bash
+sudo cat /usr/local/cuda/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
+```
+
+若出现如下输出，说明安装成功。
+
+<img src="/home/sakana/图片/2023-04-17_15-55.png" style="zoom:50%;" />
+
+至此，CUDNN的安装结束。
 
 ## 5	安装Anaconda
 
@@ -391,7 +421,7 @@ CUDNN更多的是对CUDA的一个补充，所以CUDNN的安装相对简单，我
 
 首先，访问[Anaconda官网](https://www.anaconda.com/)，直接点击下载即可。随后在下载目录中打开终端,运行如下代码：
 
-```
+```bash
 sudo sh Anaconda程序.sh
 ```
 
